@@ -1,0 +1,65 @@
+html, body {
+  height: 100%;
+  margin: 0;
+}
+
+body {
+  background-color: #999;
+  font-size: 16px;
+}
+
+.controls {
+  text-align: center;
+  margin: 50px 0;
+}
+
+.scoresbox {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 30px 0;
+}
+
+.btn, .catches, .misses {
+  display: inline-block;
+  font-weight: 400;
+  color: #212529;
+  background-color: #f8f9fa;
+  text-align: center;
+  vertical-align: middle;
+  padding: .375rem .75rem;
+  font-size: 1rem;
+  line-height: 1.5;
+  border-radius: .25rem;
+  transition: color .15s ease-in-out,background-color .15s ease-in-out,border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+  border: none;
+}
+
+.catches, .misses {
+  margin: 0 10px;
+}
+
+.board-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  width: 256px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.cell {
+  background-color: green;
+  border: 1px solid black;
+  box-sizing: border-box;
+  width: 64px;
+  height: 64px;
+}
+
+.character {
+  background-image: url("../img/goblin.png");
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: contain;
+}
