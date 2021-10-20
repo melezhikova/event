@@ -3,6 +3,7 @@ export default class GameController {
     this.gamePlay = gamePlay;
     this.catches = 0;
     this.misses = 0;
+    this.noClick = 0;
     this.charIndex = -1;
     this.id = null;
   }
@@ -14,11 +15,17 @@ export default class GameController {
     this.updateScores();
 
     this.id = setInterval(() => {
-      this.findChar();
-      let number = Math.floor(Math.random() * this.gamePlay.cells.length);
-      if (number === this.charIndex) {
-        number = Math.floor(Math.random() * this.gamePlay.cells.length);
-      } else {
+      this.misses += this.noClick;
+      this.updateScores();
+      let lose = this.checkLose();
+      if (lose === false) {
+        this.findChar();
+        let number = Math.floor(Math.random() * this.gamePlay.cells.length);
+        if (number === this.charIndex && this.charIndex >= 2) {
+          number = this.charIndex / 2;
+        } else if (number === this.charIndex && this.charIndex < 2) {
+          number = this.charIndex + 2;
+        }
         this.figaro(number);
       }
     },
@@ -26,6 +33,7 @@ export default class GameController {
   }
 
   onCellClick(index) {
+    this.noClick = 0;
     if (index === this.charIndex) {
       this.catches += 1;
     } else {
@@ -39,21 +47,25 @@ export default class GameController {
     const catches = document.querySelector('.catches');
     const misses = document.querySelector('.misses');
     catches.innerText = `Поймал: ${this.catches} раз`;
-    misses.innerText = `Ткнул мимо: ${this.misses} раз`;
+    misses.innerText = `Промазал: ${this.misses} раз`;
   }
 
   checkLose() {
     if (this.misses === 5) {
+      clearInterval(this.id);
       alert('Вы проиграли :(');
       this.gamePlay.cellClickListeners = [];
-      clearInterval(this.id);
+      return true;
     }
+    return false;
   }
 
   onNewGameClick() {
     clearInterval(this.id);
+    this.gamePlay.cellClickListeners = [];
     this.catches = 0;
     this.misses = 0;
+    this.noClick = 0;
     this.init();
   }
 
@@ -68,5 +80,6 @@ export default class GameController {
     const figaroCell = this.gamePlay.cells[number];
     figaroCell.classList.add('character');
     this.charIndex = number;
+    this.noClick = 1;
   }
 }
