@@ -17,7 +17,7 @@ export default class GameController {
     this.id = setInterval(() => {
       this.misses += this.noClick;
       this.updateScores();
-      let lose = this.checkLose();
+      const lose = this.checkLose();
       if (lose === false) {
         this.findChar();
         let number = Math.floor(Math.random() * this.gamePlay.cells.length);
